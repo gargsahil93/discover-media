@@ -3,12 +3,19 @@ import  PropTypes from 'prop-types';
 import './discoverOptions.css';
 
 class DiscoverOptions extends React.Component {
+    state = {
+        selectedStar : 0
+    };
 
     updateRatingSearch = (e) => {
         let id = e.target.id;
         if (id.startsWith('star-')) {
             let index = id.indexOf('-') + 1;
-            this.props.updateRating(+id.slice(index));
+            let stars = +id.slice(index);
+            this.setState({
+                selectedStar : stars
+            });
+            this.props.updateRating(stars);
         }
     };
 
@@ -51,11 +58,11 @@ class DiscoverOptions extends React.Component {
                     <div className="option">
                         <span>Rating</span>
                         <div className="option-input rating" onClick={this.updateRatingSearch}>
-                            <span id="star-5">☆</span>
-                            <span id="star-4">☆</span>
-                            <span id="star-3">☆</span>
-                            <span id="star-2">☆</span>
-                            <span id="star-1">☆</span>
+                            <span id="star-5" className={this.state.selectedStar === 5 ? 'selected-star' : undefined}>☆</span>
+                            <span id="star-4" className={this.state.selectedStar >= 4 ? 'selected-star' : undefined}>☆</span>
+                            <span id="star-3" className={this.state.selectedStar >= 3 ? 'selected-star' : undefined}>☆</span>
+                            <span id="star-2" className={this.state.selectedStar >= 2 ? 'selected-star' : undefined}>☆</span>
+                            <span id="star-1" className={this.state.selectedStar >= 1 ? 'selected-star' : undefined}>☆</span>
                         </div>
                     </div>
                 </div>

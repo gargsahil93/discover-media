@@ -2,9 +2,10 @@
     padding: 20px 0 0 10px;
     display: flex;
     flex-direction: column;
+
+    background-image: linear-gradient(to right, rgb(35, 41, 51), rgb(45, 51, 61));
 }
 .discover .discover-content {
-    /*flex-grow: 1;*/
     height: 100%;
     overflow-y: scroll;
 }

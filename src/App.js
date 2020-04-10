@@ -8,7 +8,7 @@ class App extends React.Component{
     state = {
         searchParam : {
             type : 'movie',
-            rating : null,
+            rating : 0,
             genre : "-1",
             view : 'popular'
         },
@@ -25,7 +25,7 @@ class App extends React.Component{
                 ...this.state.searchParam,
                 rating
             }
-        });
+        }, this.refreshView);
     };
 
     updateGenre = (genre) => {
@@ -104,12 +104,12 @@ class App extends React.Component{
     getDiscoverURL = () => {
         let baseURL = 'https://api.themoviedb.org/3/';
         let apiKey = '3a94078fb34b772a31d9a1348035bed7';
-        let {type, genre} = this.state.searchParam;
-        if (this.state.searchParam.view === 'trend') {
+        let {type, genre, view, rating} = this.state.searchParam;
+        if (view === 'trend') {
             return `${baseURL}trending/${type}/day?api_key=${apiKey}`;
         } else {
             let url = `${baseURL}discover/${type}?api_key=${apiKey}`;
-            switch (this.state.searchParam.view) {
+            switch (view) {
                 case 'popular':
                     url += '&sort_by=popularity.desc';
                     break;
@@ -125,6 +125,10 @@ class App extends React.Component{
             }
             if (genre !== "-1") {
                 url += `&with_genres=${genre}`
+            }
+            if (rating !== 0) {
+                //api has rating from 1-10, convert 5 scale rating to 10, 3=>5-7
+                url += `&vote_average.lte=${rating*2 + 1}&vote_average.gte=${rating*2 - 1}`;
             }
             return url;
         }

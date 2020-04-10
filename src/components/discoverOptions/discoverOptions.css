@@ -1,8 +1,9 @@
 .discover-options {
-    /*border: 1px solid black;*/
-    border-left: rgb(17, 19, 20) solid 5px;
+    border-left: rgb(30, 35, 45) solid 1px;
     color: rgb(128, 137, 150);
     padding-top: 30px;
+
+    background-image: linear-gradient(to right, rgb(35, 41, 51), rgb(45, 51, 61));
 }
 
 .discover-options .options-inner {
@@ -37,7 +38,14 @@
 .rating > span:hover ~ span:before {
     content: "\2605";
     position: absolute;
+    color: gold;
 }
 .rating span:hover {
     cursor: pointer;
+}
+
+.rating .selected-star:before {
+    content: "\2605";
+    color: gold;
+    position: absolute;
 }
