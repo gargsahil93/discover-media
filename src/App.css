@@ -28,7 +28,7 @@ html, body {
   min-width: 200px;
 }
 
-select {
+select, input {
   background-color: rgb(35, 41, 51);
   color: white;
   border-color: rgb(128, 137, 150);

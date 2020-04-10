@@ -19,7 +19,10 @@ class DiscoverHeader extends React.Component{
                     <span className={(view === "new" && "white-text link") || "link"} id="new">Newest</span>
                     <span className={(view === "top" && "white-text link") || "link"} id="top">Top Rated</span>
                 </div>
-                <div className="search">Search</div>
+                <div className="search">
+                    <i className="material-icons">search</i>
+                    <input type="text" name="search" className="search-box" placeholder="Search"></input>
+                </div>
             </div>
         );
     }
