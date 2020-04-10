@@ -76,7 +76,7 @@ class DiscoverOptions extends React.Component {
                                     }
                                 })}
                             </select>
-                            <span>-</span>
+                            &nbsp;
                             <select className="option-input" id="year-to" value={maxYear} onChange={this.updateMaxYear}>
                                 {years.map((v, k) => {
                                     if (minYear <= this.MIN_YEAR + k) {
