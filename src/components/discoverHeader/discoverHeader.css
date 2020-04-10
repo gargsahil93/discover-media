@@ -1,0 +1,19 @@
+.discover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(76, 164, 199);
+    padding-bottom: 10px;
+}
+
+.header-links .link {
+    padding: 0 5px;
+}
+
+.header-links .link:hover {
+    cursor: pointer;
+}
+
+.white-text {
+    color: white;
+}

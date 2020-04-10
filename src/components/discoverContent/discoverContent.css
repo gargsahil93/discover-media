@@ -1,0 +1,10 @@
+.discover-content {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+/*.discover-content::after {*/
+/*    content: "";*/
+/*    flex: auto;*/
+/*}*/

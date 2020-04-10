@@ -1,0 +1,9 @@
+.content-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tile-title {
+    color: rgb(76, 164, 199);
+    padding-bottom: 5px;
+}
