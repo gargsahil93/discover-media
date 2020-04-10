@@ -22,31 +22,31 @@ class ContentTile extends Component {
             width: `${this.state.imgSize}px`,
             height: '513px'
         }
-    }
+    };
 
     getGenreRow = () => {
         let yearDate = this.props.item.release_date || this.props.item.first_air_date || "";
         let yearIndex = yearDate.indexOf('-');
         let year = yearDate.slice(0, yearIndex);
-        let genre;
-        if (this.props.selectedGenre === "-1") {
+        let genre, selectedGenre = this.props.searchParam.genre;
+        if (selectedGenre === "-1" || this.props.searchParam.view === "trend") {
             let genreId = this.props.item.genre_ids[0];
             genre = this.props.genreMap[genreId];
         } else {
-            genre = this.props.genreMap[this.props.selectedGenre];
+            genre = this.props.genreMap[selectedGenre];
         }
 
         if (!genre) return year;
         if (!year) return genre;
         return `${genre}, ${year}`;
-    }
+    };
 
     render() {
         return (
             <div className="content-tile" style={this.getTileStyle()}>
                 {
                     (this.props.item.poster_path &&
-                    <img src={`${this.props.secureBaseURL}w${this.state.imgSize}/${this.props.item.poster_path}`} alt=""/>) ||
+                    <img src={`${this.props.secureBaseURL}w${this.state.imgSize}/${this.props.item.poster_path}`} alt="" style={this.getImageStyle()}/>) ||
                     <img
                         src="https://image.freepik.com/free-vector/coming-soon-message-illuminated-with-light-projector_1284-3622.jpg"
                         alt=""
@@ -65,7 +65,7 @@ ContentTile.propTypes = {
     item: PropTypes.object.isRequired,
     secureBaseURL: PropTypes.string.isRequired,
     genreMap: PropTypes.object.isRequired,
-    selectedGenre: PropTypes.string
+    searchParam: PropTypes.object.isRequired
 };
 
 export default ContentTile;

@@ -16,7 +16,7 @@ class DiscoverContent extends React.Component {
                             item={item}
                             secureBaseURL={this.props.secureBaseURL}
                             genreMap={this.props.genreMap}
-                            selectedGenre={this.props.searchParam.genre}
+                            searchParam={this.props.searchParam}
                         />
                     );
                 })}
