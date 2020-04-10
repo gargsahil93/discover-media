@@ -10,7 +10,9 @@ class App extends React.Component{
             type : 'movie',
             rating : 0,
             genre : "-1",
-            view : 'popular'
+            view : 'popular',
+            minYear: 1874,
+            maxYear: 2040
         },
         genres : [],
         contentList : [],
@@ -47,6 +49,24 @@ class App extends React.Component{
                     }
                 }, this.refreshView);
             });
+    };
+
+    updateMinYear = (year) => {
+        this.setState({
+            searchParam : {
+                ...this.state.searchParam,
+                minYear : year
+            }
+        }, this.refreshView);
+    };
+
+    updateMaxYear = (year) => {
+        this.setState({
+            searchParam : {
+                ...this.state.searchParam,
+                maxYear : year
+            }
+        }, this.refreshView);
     };
 
     getConfiguration = () => {
@@ -104,7 +124,7 @@ class App extends React.Component{
     getDiscoverURL = () => {
         let baseURL = 'https://api.themoviedb.org/3/';
         let apiKey = '3a94078fb34b772a31d9a1348035bed7';
-        let {type, genre, view, rating} = this.state.searchParam;
+        let {type, genre, view, rating, minYear, maxYear} = this.state.searchParam;
         if (view === 'trend') {
             return `${baseURL}trending/${type}/day?api_key=${apiKey}`;
         } else {
@@ -130,6 +150,7 @@ class App extends React.Component{
                 //api has rating from 1-10, convert 5 scale rating to 10, 3=>5-7
                 url += `&vote_average.lte=${rating*2 + 1}&vote_average.gte=${rating*2 - 1}`;
             }
+            url += `&primary_release_date.gte=${minYear}-01-01&primary_release_date.lte=${maxYear}-12-31`;
             return url;
         }
     };
@@ -156,6 +177,9 @@ class App extends React.Component{
                   updateGenre={this.updateGenre}
                   updateType={this.updateType}
                   genres = {this.state.genres}
+                  updateMaxYear={this.updateMaxYear}
+                  updateMinYear={this.updateMinYear}
+                  searchParam={this.state.searchParam}
               />
             </div>
         );

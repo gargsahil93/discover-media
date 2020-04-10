@@ -21,8 +21,15 @@ html, body {
 }
 .app .discover {
   flex-grow: 1;
+  width: 85%;
 }
 .app .discover-options {
   width: 15%;
   min-width: 200px;
+}
+
+select {
+  background-color: rgb(35, 41, 51);
+  color: white;
+  border-color: rgb(128, 137, 150);
 }
