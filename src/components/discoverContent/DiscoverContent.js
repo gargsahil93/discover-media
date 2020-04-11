@@ -11,7 +11,7 @@ class DiscoverContent extends React.Component {
         this.childRef = React.createRef();
     }
 
-    childMounted = () => {
+    componentDidMount() {
         this.observer = new IntersectionObserver((entries, obs) => {
             let entry = entries[0];
             if (entry.isIntersecting) {
@@ -21,6 +21,9 @@ class DiscoverContent extends React.Component {
         }, {
             root: this.props.parentRef.current
         });
+    }
+
+    childMounted = () => {
         this.observer.observe(this.childRef.current);
     };
 
