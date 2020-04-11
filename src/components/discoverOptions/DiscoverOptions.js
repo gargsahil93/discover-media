@@ -49,60 +49,65 @@ class DiscoverOptions extends React.Component {
                             <option value="tv">TV Shows</option>
                         </select>
                     </div>
-                    <div className="option">
-                        <label>Genre</label>
-                        <select className="option-input" id="genre" onChange={this.updateGenre}>
-                            {this.props.genres.map(genre => {
-                                return (
-                                    <option key={genre.id} value={genre.id}>{genre.name}</option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                    <div className="option">
-                        <label>Year</label>
-                        <div className="select-year">
-                            <select className="option-input" id="year-from" value={minYear} onChange={this.updateMinYear}>
-                                {years.map((v, k) => {
-                                    if (maxYear >= this.MIN_YEAR + k) {
-                                        return (
-                                            <option
-                                                key={k}
-                                                value={k+this.MIN_YEAR}
-                                            >
-                                                {k+this.MIN_YEAR}
-                                            </option>
-                                        );
-                                    }
-                                })}
-                            </select>
-                            &nbsp;
-                            <select className="option-input" id="year-to" value={maxYear} onChange={this.updateMaxYear}>
-                                {years.map((v, k) => {
-                                    if (minYear <= this.MIN_YEAR + k) {
-                                        return (
-                                            <option
-                                                key={k}
-                                                value={k+this.MIN_YEAR}
-                                            >
-                                                {k+this.MIN_YEAR}
-                                            </option>
-                                        );
-                                    }
-                                })}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="option">
-                        <label>Rating</label>
-                        <div className="option-input rating" onClick={this.updateRatingSearch}>
-                            <span id="star-5" className={this.state.selectedStar === 5 ? 'selected-star' : undefined}>☆</span>
-                            <span id="star-4" className={this.state.selectedStar >= 4 ? 'selected-star' : undefined}>☆</span>
-                            <span id="star-3" className={this.state.selectedStar >= 3 ? 'selected-star' : undefined}>☆</span>
-                            <span id="star-2" className={this.state.selectedStar >= 2 ? 'selected-star' : undefined}>☆</span>
-                            <span id="star-1" className={this.state.selectedStar >= 1 ? 'selected-star' : undefined}>☆</span>
-                        </div>
-                    </div>
+                    {!this.props.searchParam.searchStr ?
+                        (
+                            <React.Fragment>
+                                <div className="option">
+                                    <label>Genre</label>
+                                    <select className="option-input" id="genre" onChange={this.updateGenre}>
+                                        {this.props.genres.map(genre => {
+                                            return (
+                                                <option key={genre.id} value={genre.id}>{genre.name}</option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                                <div className="option">
+                                    <label>Year</label>
+                                    <div className="select-year">
+                                        <select className="option-input" id="year-from" value={minYear} onChange={this.updateMinYear}>
+                                            {years.map((v, k) => {
+                                                if (maxYear >= this.MIN_YEAR + k) {
+                                                    return (
+                                                        <option
+                                                            key={k}
+                                                            value={k+this.MIN_YEAR}
+                                                        >
+                                                            {k+this.MIN_YEAR}
+                                                        </option>
+                                                    );
+                                                }
+                                            })}
+                                        </select>
+                                        &nbsp;
+                                        <select className="option-input" id="year-to" value={maxYear} onChange={this.updateMaxYear}>
+                                            {years.map((v, k) => {
+                                                if (minYear <= this.MIN_YEAR + k) {
+                                                    return (
+                                                        <option
+                                                            key={k}
+                                                            value={k+this.MIN_YEAR}
+                                                        >
+                                                            {k+this.MIN_YEAR}
+                                                        </option>
+                                                    );
+                                                }
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="option">
+                                    <label>Rating</label>
+                                    <div className="option-input rating" onClick={this.updateRatingSearch}>
+                                        <span id="star-5" className={this.state.selectedStar === 5 ? 'selected-star' : undefined}>☆</span>
+                                        <span id="star-4" className={this.state.selectedStar >= 4 ? 'selected-star' : undefined}>☆</span>
+                                        <span id="star-3" className={this.state.selectedStar >= 3 ? 'selected-star' : undefined}>☆</span>
+                                        <span id="star-2" className={this.state.selectedStar >= 2 ? 'selected-star' : undefined}>☆</span>
+                                        <span id="star-1" className={this.state.selectedStar >= 1 ? 'selected-star' : undefined}>☆</span>
+                                    </div>
+                                </div>
+                            </React.Fragment>
+                        ) : ''}
                 </div>
             </div>
         );

@@ -2,6 +2,8 @@ import React from 'react';
 import Discover from "./components/discover/Discover";
 import DiscoverOptions from "./components/discoverOptions/DiscoverOptions";
 
+import {debounce} from 'debounce';
+
 import './App.css';
 
 class App extends React.Component{
@@ -12,13 +14,26 @@ class App extends React.Component{
             genre : "-1",
             view : 'popular',
             minYear: 1874,
-            maxYear: 2040
+            maxYear: 2040,
+            searchStr: ''
         },
         genres : [],
         contentList : [],
         configuration: {},
         secureBaseURL: 'https://image.tmdb.org/t/p/',
         genreMap: {}
+    };
+
+    updateSearchStr = (e) => {
+        let searchStr = e.target.value;
+        if (searchStr !== this.state.searchParam.searchStr) {
+            this.setState({
+                searchParam : {
+                    ...this.state.searchParam,
+                    searchStr
+                }
+            }, this.searchStr());
+        }
     };
 
     updateRating = (rating) => {
@@ -68,6 +83,12 @@ class App extends React.Component{
             }
         }, this.refreshView);
     };
+
+    searchStr = (() => {
+        return debounce(() => {
+            this.refreshView();
+        }, 500);
+    })();
 
     getConfiguration = () => {
         fetch('https://api.themoviedb.org/3/configuration?api_key=3a94078fb34b772a31d9a1348035bed7')
@@ -122,13 +143,11 @@ class App extends React.Component{
     };
 
     getDiscoverURL = () => {
-        let baseURL = 'https://api.themoviedb.org/3/';
         let apiKey = '3a94078fb34b772a31d9a1348035bed7';
-        let {type, genre, view, rating, minYear, maxYear} = this.state.searchParam;
-        // if (view === 'trend') {
-        //     return `${baseURL}trending/${type}/day?api_key=${apiKey}`;
-        // } else {
-            let url = `${baseURL}discover/${type}?api_key=${apiKey}`;
+        let {type, genre, view, rating, minYear, maxYear, searchStr} = this.state.searchParam;
+        let url = 'https://api.themoviedb.org/3/';
+        if (!searchStr) {
+            url += `discover/${type}?`;
             switch (view) {
                 case 'popular':
                     url += '&sort_by=popularity.desc';
@@ -154,8 +173,12 @@ class App extends React.Component{
                 url += `&vote_average.lte=${rating*2 + 1}&vote_average.gte=${rating*2 - 1}`;
             }
             url += `&primary_release_date.gte=${minYear}-01-01&primary_release_date.lte=${maxYear}-12-31`;
-            return url;
-        // }
+        } else {
+            url += `search/${type}?`;
+            url += `&query=${this.state.searchParam.searchStr}`;
+        }
+        url += `&api_key=${apiKey}`;
+        return url;
     };
 
     componentDidMount() {
@@ -172,8 +195,8 @@ class App extends React.Component{
                   secureBaseURL={this.state.secureBaseURL}
                   genreMap={this.state.genreMap}
                   updateView={this.updateView}
-                  view={this.state.searchParam.view}
                   searchParam={this.state.searchParam}
+                  updateSearchStr={this.updateSearchStr}
               />
               <DiscoverOptions
                   updateRating={this.updateRating}

@@ -9,7 +9,7 @@ class DiscoverHeader extends React.Component{
     }
 
     render () {
-        let view = this.props.view;
+        let view = !this.props.searchStr ? this.props.view : 'search';
         return (
             <div className="discover-header">
                 <h2 className="white-text">Discover</h2>
@@ -21,7 +21,13 @@ class DiscoverHeader extends React.Component{
                 </div>
                 <div className="search">
                     <i className="material-icons">search</i>
-                    <input type="text" name="search" className="search-box" placeholder="Search"></input>
+                    <input
+                        type="text"
+                        name="search"
+                        className="search-box"
+                        placeholder="Search"
+                        onChange={this.props.updateSearchStr}
+                    />
                 </div>
             </div>
         );
@@ -30,7 +36,9 @@ class DiscoverHeader extends React.Component{
 
 DiscoverHeader.propTypes = {
     updateView: PropTypes.func.isRequired,
-    view: PropTypes.string.isRequired
+    view: PropTypes.string.isRequired,
+    searchStr: PropTypes.string.isRequired,
+    updateSearchStr: PropTypes.func.isRequired
 }
 
 export default DiscoverHeader;

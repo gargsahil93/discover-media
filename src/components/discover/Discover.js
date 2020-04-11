@@ -12,7 +12,9 @@ class Discover extends React.Component {
             <div className="discover">
                 <DiscoverHeader
                     updateView={this.props.updateView}
-                    view={this.props.view}
+                    view={this.props.searchParam.view}
+                    searchStr={this.props.searchParam.searchStr}
+                    updateSearchStr={this.props.updateSearchStr}
                 />
                 <DiscoverContent
                     contentList={this.props.contentList}
@@ -30,8 +32,8 @@ Discover.propTypes = {
     secureBaseURL: PropTypes.string.isRequired,
     genreMap: PropTypes.object.isRequired,
     updateView: PropTypes.func.isRequired,
-    view: PropTypes.string.isRequired,
-    searchParam: PropTypes.object.isRequired
+    searchParam: PropTypes.object.isRequired,
+    updateSearchStr: PropTypes.func.isRequired
 };
 
 export default Discover;
