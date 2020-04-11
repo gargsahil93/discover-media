@@ -7,6 +7,8 @@ import {debounce} from 'debounce';
 import './App.css';
 
 class App extends React.Component{
+    discoverContainerRef = React.createRef();
+
     state = {
         searchParam : {
             type : 'movie',
@@ -15,13 +17,15 @@ class App extends React.Component{
             view : 'popular',
             minYear: 1874,
             maxYear: 2040,
-            searchStr: ''
+            searchStr: '',
+            page: 1
         },
         genres : [],
         contentList : [],
         configuration: {},
         secureBaseURL: 'https://image.tmdb.org/t/p/',
-        genreMap: {}
+        genreMap: {},
+        maxPages: 1
     };
 
     updateSearchStr = (e) => {
@@ -128,19 +132,47 @@ class App extends React.Component{
             searchParam : {
                 ...this.state.searchParam,
                 view,
-                searchStr: ''
+                searchStr: '',
+                page: 1
             }
         }, this.refreshView);
     };
 
     refreshView = () => {
-        fetch(this.getDiscoverURL())
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    contentList : data.results
+        this.discoverContainerRef.current.scrollTo(0, 0);
+        this.setState({
+            searchParam : {
+                ...this.state.searchParam,
+                page: 1
+            }
+        }, () => {
+            fetch(this.getDiscoverURL())
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({
+                        contentList : data.results,
+                        maxPages: data.total_pages
+                    });
                 });
-            });
+        });
+    };
+
+    getMoreData = () => {
+        if (this.state.searchParam.page < this.state.maxPages) {
+            let url = this.getDiscoverURL();
+            url += `&page=${this.state.searchParam.page+1}`;
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({
+                        contentList : [...this.state.contentList, ...data.results],
+                        searchParam : {
+                            ...this.state.searchParam,
+                            page: this.state.searchParam.page + 1
+                        }
+                    });
+                });
+        }
     };
 
     getDiscoverURL = () => {
@@ -198,6 +230,8 @@ class App extends React.Component{
                   updateView={this.updateView}
                   searchParam={this.state.searchParam}
                   updateSearchStr={this.updateSearchStr}
+                  getMoreData={this.getMoreData}
+                  parentRef={this.discoverContainerRef}
               />
               <DiscoverOptions
                   updateRating={this.updateRating}
