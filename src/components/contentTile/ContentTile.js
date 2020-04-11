@@ -29,7 +29,8 @@ class ContentTile extends Component {
         let yearIndex = yearDate.indexOf('-');
         let year = yearDate.slice(0, yearIndex);
         let genre, selectedGenre = this.props.searchParam.genre;
-        if (selectedGenre === "-1" || this.props.searchParam.view === "trend") {
+        // if (selectedGenre === "-1" || this.props.searchParam.view === "trend") {
+        if (selectedGenre === "-1") {
             let genreId = this.props.item.genre_ids[0];
             genre = this.props.genreMap[genreId];
         } else {

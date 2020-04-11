@@ -125,9 +125,9 @@ class App extends React.Component{
         let baseURL = 'https://api.themoviedb.org/3/';
         let apiKey = '3a94078fb34b772a31d9a1348035bed7';
         let {type, genre, view, rating, minYear, maxYear} = this.state.searchParam;
-        if (view === 'trend') {
-            return `${baseURL}trending/${type}/day?api_key=${apiKey}`;
-        } else {
+        // if (view === 'trend') {
+        //     return `${baseURL}trending/${type}/day?api_key=${apiKey}`;
+        // } else {
             let url = `${baseURL}discover/${type}?api_key=${apiKey}`;
             switch (view) {
                 case 'popular':
@@ -138,6 +138,9 @@ class App extends React.Component{
                     break;
                 case 'top':
                     url += '&sort_by=vote_average.desc';
+                    break;
+                case 'trend':
+                    url += '&sort_by=revenue.desc';
                     break;
                 default:
                     url += '&sort_by=popularity.desc';
@@ -152,7 +155,7 @@ class App extends React.Component{
             }
             url += `&primary_release_date.gte=${minYear}-01-01&primary_release_date.lte=${maxYear}-12-31`;
             return url;
-        }
+        // }
     };
 
     componentDidMount() {
