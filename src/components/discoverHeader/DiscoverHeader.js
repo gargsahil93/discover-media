@@ -6,7 +6,7 @@ import './discoverHeader.css';
 class DiscoverHeader extends React.Component{
     changeView = (e) => {
         this.props.updateView(e.target.id);
-    }
+    };
 
     render () {
         let view = !this.props.searchStr ? this.props.view : 'search';
@@ -27,6 +27,7 @@ class DiscoverHeader extends React.Component{
                         className="search-box"
                         placeholder="Search"
                         onChange={this.props.updateSearchStr}
+                        value={this.props.searchStr}
                     />
                 </div>
             </div>

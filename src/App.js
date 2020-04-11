@@ -127,7 +127,8 @@ class App extends React.Component{
         this.setState({
             searchParam : {
                 ...this.state.searchParam,
-                view
+                view,
+                searchStr: ''
             }
         }, this.refreshView);
     };
