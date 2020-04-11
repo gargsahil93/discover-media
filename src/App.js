@@ -5,6 +5,7 @@ import DiscoverOptions from "./components/discoverOptions/DiscoverOptions";
 import {debounce} from 'debounce';
 
 import './App.css';
+import config from './configuration';
 
 class App extends React.Component{
     discoverContainerRef = React.createRef();
@@ -22,8 +23,12 @@ class App extends React.Component{
         },
         genres : [],
         contentList : [],
-        configuration: {},
-        secureBaseURL: 'https://image.tmdb.org/t/p/',
+        configuration: {
+            images : {
+                //could be different in config api
+                secure_base_url : 'https://image.tmdb.org/t/p/'
+            }
+        },
         genreMap: {},
         maxPages: 1
     };
@@ -95,15 +100,15 @@ class App extends React.Component{
     })();
 
     getConfiguration = () => {
-        fetch('https://api.themoviedb.org/3/configuration?api_key=3a94078fb34b772a31d9a1348035bed7')
+        fetch(`${config.API_BASE_URL}configuration?api_key=${config.API_KEY}`)
             .then(res=>res.json())
             .then(data=>this.setState({
                 configuration: data
             }));
     };
 
-    getGenres = (genre) => {
-        return fetch(`https://api.themoviedb.org/3/genre/${genre}/list?api_key=3a94078fb34b772a31d9a1348035bed7`)
+    getGenres = (type) => {
+        return fetch(`${config.API_BASE_URL}genre/${type}/list?api_key=${config.API_KEY}`)
             .then(res=>res.json())
             .then(data => {
                 //create genre map for faster access for tiles
@@ -176,9 +181,8 @@ class App extends React.Component{
     };
 
     getDiscoverURL = () => {
-        let apiKey = '3a94078fb34b772a31d9a1348035bed7';
         let {type, genre, view, rating, minYear, maxYear, searchStr} = this.state.searchParam;
-        let url = 'https://api.themoviedb.org/3/';
+        let url = config.API_BASE_URL;
         if (!searchStr) {
             url += `discover/${type}?`;
             switch (view) {
@@ -210,7 +214,7 @@ class App extends React.Component{
             url += `search/${type}?`;
             url += `&query=${this.state.searchParam.searchStr}`;
         }
-        url += `&api_key=${apiKey}`;
+        url += `&api_key=${config.API_KEY}`;
         return url;
     };
 
@@ -225,7 +229,7 @@ class App extends React.Component{
             <div className="app">
               <Discover
                   contentList={this.state.contentList}
-                  secureBaseURL={this.state.secureBaseURL}
+                  secureBaseURL={this.state.configuration.images['secure_base_url']}
                   genreMap={this.state.genreMap}
                   updateView={this.updateView}
                   searchParam={this.state.searchParam}

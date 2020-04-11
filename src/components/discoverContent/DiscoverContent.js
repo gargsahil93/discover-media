@@ -26,7 +26,7 @@ class DiscoverContent extends React.Component {
 
     removeObserver = () => {
         this.observer.unobserve(this.childRef.current);
-    }
+    };
 
     render () {
         return (
