@@ -9,17 +9,21 @@ class DiscoverContent extends React.Component {
     render () {
         return (
             <div className="discover-content">
-                {this.props.contentList.map(item => {
-                    return (
-                        <ContentTile
-                            key={item.id}
-                            item={item}
-                            secureBaseURL={this.props.secureBaseURL}
-                            genreMap={this.props.genreMap}
-                            searchParam={this.props.searchParam}
-                        />
-                    );
-                })}
+                {this.props.contentList.length !== 0 ?
+                    this.props.contentList.map(item => {
+                        return (
+                            <ContentTile
+                                key={item.id}
+                                item={item}
+                                secureBaseURL={this.props.secureBaseURL}
+                                genreMap={this.props.genreMap}
+                                searchParam={this.props.searchParam}
+                            />
+                        );
+                    }) :
+                    <div className="empty-container">
+                        <h2>No Content found for selected criteria.</h2>
+                    </div>}
             </div>
         );
     }
