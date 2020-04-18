@@ -1,4 +1,4 @@
-## Access this app at [disover-movies](https://discover-movies.netlify.app/)
+## Access this app at <a href="https://discover-movies.netlify.app/" target="_blank">discover-movies</a>
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
