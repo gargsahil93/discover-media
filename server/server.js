@@ -9,6 +9,6 @@ app.use(express.static('./../build', {
     extensions: ['html']
 }));          //to load static content
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('Listening on localhost:3000');
 });
